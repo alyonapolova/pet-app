@@ -1,0 +1,28 @@
+{
+  "animals": [
+    {
+      "id": "1",
+      "name": "Vasyl"
+    },
+    {
+      "id": "ObK7AkAg_pQ71UJ-0-X48",
+      "createdAt": "2023-11-16T11:53:30.277Z",
+      "updatedAt": "2023-11-16T11:53:30.277Z",
+      "name": "Vasyl",
+      "age": 5,
+      "isVaccinated": true,
+      "gender": "male",
+      "species": "cat"
+    },
+    {
+      "id": "D-N2P4h569nVaFHlYb_U8",
+      "createdAt": "2023-11-16T11:55:24.506Z",
+      "updatedAt": "2023-11-16T11:55:24.507Z",
+      "name": "Sirko",
+      "age": 3,
+      "isVaccinated": true,
+      "gender": "male",
+      "species": "cat"
+    }
+  ]
+}
