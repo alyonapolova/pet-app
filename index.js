@@ -12,6 +12,9 @@ program
     if (!id) {
       const animals = await animalsService.getAll();
       console.log("Animals were found", animals);
+    } else {
+      const animal = await animalsService.getOneById(id);
+      console.log("Animal was found", animal);
     }
   });
 
@@ -27,16 +30,19 @@ program
 program
   .command("update-animal")
   .description("Update animal")
-  .argument("<payload>")
   .requiredOption("-i, --id <id>", "animal's id")
-  .action((payload, options) => {
-    console.log("update animal", payload, options);
+  .argument("<payload>")
+  .action(async ({ id }, payload) => {
+    const updatedAnimal = await animalsService.updateById(id, payload);
+    console.log("updated animal", updatedAnimal);
   });
+
 program
   .command("delete-animal")
   .description("Delete animal")
   .requiredOption("-i, --id <id>", "animal's id")
-  .action((options) => {
-    console.log("delete animal", options);
+  .action(async ({ id }) => {
+    const deletedAnimal = await animalsService.delete(id);
+    console.log("delete animal", deletedAnimal);
   });
 program.parse(process.argv);

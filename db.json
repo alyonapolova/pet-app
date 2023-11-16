@@ -1,10 +1,6 @@
 {
   "animals": [
     {
-      "id": "1",
-      "name": "Vasyl"
-    },
-    {
       "id": "ObK7AkAg_pQ71UJ-0-X48",
       "createdAt": "2023-11-16T11:53:30.277Z",
       "updatedAt": "2023-11-16T11:53:30.277Z",
@@ -23,6 +19,20 @@
       "isVaccinated": true,
       "gender": "male",
       "species": "cat"
+    },
+    {
+      "id": "UR8MDWQe7yG2o73i0A4Zi",
+      "createdAt": "2023-11-16T17:36:15.922Z",
+      "updatedAt": "2023-11-16T17:36:15.922Z",
+      "name": "UpdatedName",
+      "age": 6,
+      "isVaccinated": false
+    },
+    {
+      "id": "9T1L3VDvQ1eW-M-_WFoab",
+      "createdAt": "2023-11-16T18:06:03.645Z",
+      "updatedAt": "2023-11-16T18:06:03.647Z",
+      "name": "Vasyl"
     }
   ]
 }
