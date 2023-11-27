@@ -18,16 +18,10 @@ class AnimalsService {
   }
 
   async updateById(id, payload) {
-    return await this.animalsRepository.update(id, {
-      name,
-      age,
-      isVaccinated,
-      gender,
-      species,
-    });
+    return await this.animalsRepository.update(id, payload);
   }
 
-  async delete(id) {
+  async deleteAnimal(id) {
     return await this.animalsRepository.delete(id);
   }
 }

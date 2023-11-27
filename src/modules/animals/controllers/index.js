@@ -29,9 +29,24 @@ class AnimalController {
       data: animal,
     });
   };
-  updateAnimal = (req, res) => {
+  updateAnimal = async (req, res) => {
     const animalId = req.params.animalId;
-    res.json({ message: `Update animal with id ${animalId}` });
+    const animal = await this.animalsService.updateById(animalId, req.body);
+    res.json({
+      status: 200,
+      message: "Successfully updated an animal!",
+      data: animal,
+    });
+  };
+
+  deleteAnimal = async (req, res) => {
+    const animalId = req.params.animalId;
+    const animal = await this.animalsService.deleteAnimal(animalId);
+    res.json({
+      status: 200,
+      message: "Successfully deleted an animal!",
+      data: animal,
+    });
   };
 }
 const animalController = new AnimalController(animalsService);

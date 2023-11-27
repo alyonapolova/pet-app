@@ -33,29 +33,32 @@ class AnimalsRepository {
   }
 
   async update(id, payload) {
+    const animal = await this.findOneById(id);
+    if (!animal) {
+      return;
+    }
+
     const db = await this.readDBFile();
     const index = db.animals.findIndex((item) => item.id === id);
     console.log("index", index);
     if (index === -1) {
       return null;
     }
-    console.log("db.animals"), db.animals;
-    db.animals[index] = { id, ...payload };
+
+    const updatedAnimal = { ...db.animals[index], ...payload };
+    console.log("updatedAnimal"), updatedAnimal;
     await this.writeDBFile(db);
-    console.log("Updating animal with ID:", id);
-    console.log("Update payload:", payload);
-    return db.animals[index];
+
+    return updatedAnimal;
   }
 
   async delete(id) {
     const db = await this.readDBFile();
-    const index = db.animals.findIndex((item) => item.id === id);
-    if (index === -1) {
-      return null;
-    }
-    const [result] = db.animals.splice(index, 1);
+    const filteredAnimals = db.animals.filter((item) => item.id !== id);
+
+    db.animals = filteredAnimals;
     await this.writeDBFile(db);
-    return result;
+    return id;
   }
 }
 
