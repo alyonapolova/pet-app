@@ -12,8 +12,9 @@ class AnimalController {
       data: animals,
     });
   };
+
   getOneAnimal = async (req, res) => {
-    const animalId = req.params.animalId;
+    const { animalId } = req.params;
     const animal = await this.animalsService.getOneById(animalId);
     res.json({
       status: 200,

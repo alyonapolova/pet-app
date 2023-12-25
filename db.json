@@ -93,6 +93,16 @@
       "isVaccinated": true,
       "gender": "male",
       "species": "cat"
+    },
+    {
+      "id": "CfQVro-dvFxyX3Op5-DHw",
+      "createdAt": "2023-12-25T20:05:25.652Z",
+      "updatedAt": "2023-12-25T20:05:25.652Z",
+      "name": "Vasyl4",
+      "age": 4,
+      "isVaccinated": true,
+      "gender": "male",
+      "species": "cat"
     }
   ]
 }
