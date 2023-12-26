@@ -1,34 +1,49 @@
 const path = require("node:path");
 const fs = require("node:fs/promises");
+const Animal = require("../models/animal");
 
 class AnimalsRepository {
-  dbPath = path.join(process.cwd(), "db.json");
+  async findAll(config) {
+    const { page, limit, isVaccinated, sortBy, order, minAge } = config;
+    const skip = (page - 1) * limit;
+    const animals = await Animal.find()
+      .where("deletedAt")
+      .equals(null)
+      .skip(skip)
+      .limit(limit);
 
-  async readDBFile() {
-    const content = await fs.readFile(this.dbPath);
-    const entries = JSON.parse(content.toString());
-    return entries;
-  }
-  async writeDBFile(db) {
-    const string = JSON.stringify(db, null, 2);
-    await fs.writeFile(this.dbPath, string);
-  }
+    const total = await Animal.countDocuments().where("deletedAt").equals(null);
 
-  async findAll() {
-    const db = await this.readDBFile();
-    return db.animals;
+    if (isVaccinated) {
+      animals.where("isVaccinated").equals(isVaccinated);
+      total.where("isVaccinated").equals(isVaccinated);
+    }
+
+    if (minAge) {
+      animals.where("age").gte(minAge);
+      total.where("age").gte(minAge);
+    }
+
+    if (sortBy) {
+      animls.sort({
+        [sortBy]: order,
+      });
+    }
+    const animalsAll = await animals.exec();
+    const totalAnimals = await total.exec();
+
+    return { animalsAll, totalAnimals };
   }
 
   async findOneById(id) {
-    const db = await this.readDBFile();
-    const animal = db.animals.find((item) => item.id === id);
+    const animal = await Animal.findById(id).where("deletedAt").equals(null);
     return animal;
   }
 
-  async create(animal) {
-    const db = await this.readDBFile();
-    db.animals.push(animal);
-    await this.writeDBFile(db);
+  async create(payload) {
+    const animal = new Animal(payload);
+    await animal.save();
+
     return animal;
   }
 
@@ -38,26 +53,21 @@ class AnimalsRepository {
       return;
     }
 
-    const db = await this.readDBFile();
-    const index = db.animals.findIndex((item) => item.id === id);
-    console.log("index", index);
-    if (index === -1) {
-      return null;
-    }
-
-    const updatedAnimal = { ...db.animals[index], ...payload };
-    console.log("updatedAnimal"), updatedAnimal;
-    await this.writeDBFile(db);
+    const updatedAnimal = await Animal.findByIdAndUpdate(id, payload, {
+      returnOriginal: false,
+    });
 
     return updatedAnimal;
   }
 
   async delete(id) {
-    const db = await this.readDBFile();
-    const filteredAnimals = db.animals.filter((item) => item.id !== id);
-
-    db.animals = filteredAnimals;
-    await this.writeDBFile(db);
+    const animal = await this.findOneById(id);
+    if (!animal) {
+      return;
+    }
+    await Animal.findByIdAndUpdate(id, {
+      $set: { deletedAt: new Date() },
+    });
     return id;
   }
 }

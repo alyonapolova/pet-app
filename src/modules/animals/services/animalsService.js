@@ -5,8 +5,8 @@ class AnimalsService {
   constructor(animalsRepository) {
     this.animalsRepository = animalsRepository;
   }
-  async getAll() {
-    return await this.animalsRepository.findAll();
+  async getAll(config) {
+    return await this.animalsRepository.findAll(config);
   }
   async getOneById(id) {
     const animal = await this.animalsRepository.findOneById(id);
@@ -17,8 +17,7 @@ class AnimalsService {
   }
 
   async create(payload) {
-    const animal = new Animal(payload);
-    return await this.animalsRepository.create(animal);
+    return await this.animalsRepository.create(payload);
   }
 
   async updateById(id, payload) {
